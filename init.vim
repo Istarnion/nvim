@@ -13,7 +13,10 @@ NeoBundle 'sheerun/vim-polyglot'        " syntax files for all languages I'll ev
 NeoBundle 'ctrlpvim/ctrlp.vim'          " Fuzzy file finding
 NeoBundle 'SirVer/ultisnips'            " Snippet systems
 NeoBundle 'honza/vim-snippets'          " Snippet library
-NeoBundle 'Shougo/deoplete.nvim'
+NeoBundle 'Shougo/deoplete.nvim'        " automatic autocompletion that works across buffers
+NeoBundle 'vim-airline/vim-airline'     " More fancy status line
+NeoBundle 'vim-airline/vim-airline-themes'
+NeoBundle 'airblade/vim-gitgutter'      " Shows git diff in the gutter. Integrates also woth the statusline
 
 call neobundle#end()
 filetype plugin indent on
@@ -43,12 +46,16 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
+" Settings for airline statusline
+let g:airline_powerline_fonts=1
+let g:airline_section_x='CWD: %r%{getcwd()}%h'
+
 " Use the system clipboard
 set clipboard=unnamed,unnamedplus
 
 " <Ctrl-d> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-d> :nohl<CR><C-l>
- 
+
 " indent automaticly depending on filetype
 filetype plugin indent on
 set autoindent
@@ -114,9 +121,6 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 " Always show the status line
 set laststatus=2
 
-" Format the status line
-set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-
 " colorscheme
 " colors asu1dark
 set background=dark
@@ -142,9 +146,9 @@ if kbl == "qwerty"
     noremap Ø O
 
 else
-	noremap n j
-	noremap e k
-	noremap i l
+    noremap n j
+    noremap e k
+    noremap i l
 
 endif
 
