@@ -4,31 +4,31 @@ set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
 call neobundle#begin(expand('~/.config/nvim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'sheerun/vim-polyglot'
-NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'tpope/vim-surround'          " Commands to add/remove/change surrounding stuff
+NeoBundle 'jiangmiao/auto-pairs'        " Auto insert closing )}]' and so on
+NeoBundle 'flazz/vim-colorschemes'      " Make tons of colorschemes available
+NeoBundle 'Yggdroot/indentLine'         " display thin vertical lines at indentation
+NeoBundle 'mattn/emmet-vim'             " emmet plugin ofr html and css
+NeoBundle 'sheerun/vim-polyglot'        " syntax files for all languages I'll ever need
+NeoBundle 'ctrlpvim/ctrlp.vim'          " Fuzzy file finding
+NeoBundle 'SirVer/ultisnips'            " Snippet systems
+NeoBundle 'honza/vim-snippets'          " Snippet library
 NeoBundle 'Shougo/deoplete.nvim'
-NeoBundle 'SirVer/ultisnips'
 
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 
-" deoplete config
-let g:deoplete#enable_at_startup = 1
-" disable autocomplete
-"let g:deoplete#disable_auto_complete = 1
+" Deoplete config
+let g:deoplete#enable_at_startup=1
 if has("gui_running")
     inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
 else
     inoremap <silent><expr><C-@> deoplete#mappings#manual_complete()
 endif
+
 " UltiSnips config
-inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
@@ -116,12 +116,6 @@ set laststatus=2
 
 " Format the status line
 set statusline=\ %F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="A-o"
-
-let g:UltiSnipsJumpForwardTrigger="<c-o>"
-let g:UltiSnipsJumpBackwardTrigger="<c-u>"
 
 " colorscheme
 " colors asu1dark
