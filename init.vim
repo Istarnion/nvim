@@ -7,23 +7,31 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'sheerun/vim-polyglot'
 NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'Shougo/deoplete.nvim'
+NeoBundle 'SirVer/ultisnips'
 
 call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 
-" Custom setting for YouCompleteMe
-let g:ycm_enable_diagnostic_signs = 0
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_global_ycm_extra_conf = '~/.config/nvim/.ycm_extra_conf.py'
+" deoplete config
+let g:deoplete#enable_at_startup = 1
+" disable autocomplete
+"let g:deoplete#disable_auto_complete = 1
+if has("gui_running")
+    inoremap <silent><expr><C-Space> deoplete#mappings#manual_complete()
+else
+    inoremap <silent><expr><C-@> deoplete#mappings#manual_complete()
+endif
+" UltiSnips config
+inoremap <silent><expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Settings for emmet-vim
 let g:user_emmet_install_global = 0
@@ -38,7 +46,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 " Use the system clipboard
 set clipboard=unnamed,unnamedplus
 
-" <Ctrl-l> redraws the screen and removes any search highlighting.
+" <Ctrl-d> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-d> :nohl<CR><C-l>
  
 " indent automaticly depending on filetype
@@ -54,6 +62,9 @@ set expandtab
 
 let mapleader = ","
 let g:mapleader = ","
+
+" Save with C-s in insert mode
+inoremap <C-s> <Esc>:w<CR>
 
 " enable line numbers
 set number
