@@ -48,7 +48,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
 " Settings for airline statusline
 let g:airline_powerline_fonts=1
-let g:airline_section_x='CWD: %r%{getcwd()}%h'
+let g:airline_section_x='%r%{getcwd()}%h'
 
 " Use the system clipboard
 set clipboard=unnamed,unnamedplus
