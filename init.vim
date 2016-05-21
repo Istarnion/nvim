@@ -95,7 +95,7 @@ set smartcase
 nmap <silent> <A-h> :vsplit<CR>
 nmap <silent> <A-k> :split<CR>
 nmap <silent> <A-l> :vsplit<CR> :wincmd l<CR>
-nmap <silent> <A-j> :botright split<CR> :wincmd j<CR>
+nmap <silent> <A-j> :split<CR> :wincmd j<CR>
 
 " Smart way to move between windows
 noremap <C-j> <C-W>
