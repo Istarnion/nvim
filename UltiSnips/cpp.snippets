@@ -1,0 +1,53 @@
+# This file contains snippets that are specific for C++
+
+priority 1
+
+snippet inc "Include statement" b
+#include ${1:${VISUAL:file}}
+$0
+endsnippet
+
+snippet struct "Struct declaration" b
+struct ${1:${VISUAL:name}}
+{
+	$0
+};
+endsnippet
+
+snippet class "Class declaration" b
+class ${1:${VISUAL:name}}
+{
+	$0
+};
+endsnippet
+
+snippet main "Main function" b
+int main(${1:${VISUAL:int argc, char *argv[]}})
+{
+	$0
+	return 0;
+}
+endsnippet
+
+snippet fori "For loop with i"
+for(int i=${2:${VISUAL:0}}; i<${1:${VISUAL:limit}}; ${3:${VISUAL:++i}})
+{
+	$0
+}
+endsnippet
+
+snippet once "Include header once only guard"
+#ifndef ${1:`!p
+if not snip.c:
+	import string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	snip.rv = ('%s_' % (name))
+else:
+	snip.rv = snip.c`}
+#define $1
+
+${VISUAL}$0
+
+#endif /* end of include guard: $1 */
+endsnippet
+
