@@ -52,6 +52,9 @@ if !empty(glob("~/.config/nvim/bundle"))
   let g:notes_directories = ['~/Dropbox/Notes']
 endif
 
+" Make the mouse work as we want to
+set mouse=a
+
 " Use the system clipboard
 set clipboard=unnamed,unnamedplus
 
@@ -141,12 +144,13 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 set laststatus=2
 
 " colorscheme
-colorscheme Alduin
+colorscheme Blackboard
 set background=dark
 highlight Pmenu     ctermfg=15  ctermbg=0 guifg=#ffffff guibg=#000000
 highlight PmenuSel  ctermfg=226 ctermbg=0 guifg=#ffff00 guibg=#000000
-" set cursorline
-" highlight CursorLine cterm=NONE ctermbg=black guibg=black
+set cursorline
+highlight CursorLine cterm=NONE ctermbg=234 guibg=#2D2D2D
+highlight Todo ctermfg=yellow ctermbg=black cterm=reverse guifg=Yellow guibg=Black gui=reverse
 nnoremap <leader>l :set cursorline!<CR>
 
 " Remap keys (!)
