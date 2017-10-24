@@ -41,7 +41,7 @@ if !empty(glob("~/.config/nvim/bundle"))
   let g:ctrlp_match_window = 'bottom,order:ttb'
   let g:ctrlp_switch_buffer = 0
   let g:ctrlp_working_path_mode = 0
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -i -g "" --ignore "\.git$\|\.svn$"'
 
   " Settings for airline statusline
   let g:airline_powerline_fonts=1
@@ -178,6 +178,9 @@ nmap <leader>s /struct
 " Break single line statement to block statement
 nmap <leader>b ys$}a<CR><Esc>b%i<CR><Esc>0dt}%
 
+" Run make
+nmap <silent> <leader>c :make<cr>
+
 " Run shell command and display result in other split
 command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
 function! s:RunShellCommand(cmdline)
@@ -208,5 +211,4 @@ function! s:RunShellCommand(cmdline)
     wincmd p
 endfunction
 
-nmap <silent> <leader>c :Shell make<cr>
 
