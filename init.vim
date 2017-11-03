@@ -56,7 +56,7 @@ endif
 set mouse=a
 
 " Set scroll offset to redduce movement
-set scrollof=10
+set scrolloff=7
 
 " Use the system clipboard
 set clipboard=unnamed,unnamedplus
