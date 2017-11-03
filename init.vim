@@ -55,6 +55,9 @@ endif
 " Make the mouse work as we want to
 set mouse=a
 
+" Set scroll offset to redduce movement
+set scrollof=10
+
 " Use the system clipboard
 set clipboard=unnamed,unnamedplus
 
