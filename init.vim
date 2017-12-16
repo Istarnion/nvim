@@ -20,8 +20,6 @@ if !empty(glob("~/.config/nvim/bundle"))
   NeoBundle 'tpope/vim-commentary'        " Toggle comment on line with gcc, else with gc
   NeoBundle 'scrooloose/nerdtree'         " NERDTree file browser. Yes, I do know about netrw.
   NeoBundle 'Xuyuanp/nerdtree-git-plugin' " Shows git-info in NERDTree
-  NeoBundle 'xolox/vim-misc'              " Misc scripts for plugins
-  NeoBundle 'xolox/vim-notes'             " Note taking plugin
 
   call neobundle#end()
   filetype plugin indent on
