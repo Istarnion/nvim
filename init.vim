@@ -179,8 +179,8 @@ nmap <leader>s /struct
 " Break single line statement to block statement
 nmap <leader>b ys$}a<CR><Esc>b%i<CR><Esc>0dt}%
 
-" Run make
-nmap <silent> <leader>c :make<cr>
+" Generate ctags file. ctrl-å jumps to tag under cursor, ctrl-t pops the tag stack
+command! MakeTags !ctags -R .
 
 " Run shell command and display result in other split
 command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
@@ -212,4 +212,29 @@ function! s:RunShellCommand(cmdline)
     wincmd p
 endfunction
 
+
+" Custom make runner, to get it in a split
+function Make(...)
+    if a:0 > 0
+        silent make a:000
+    else
+        silent make
+    endif
+
+    if winnr('$') > 1
+        wincmd p
+    else
+        vsplit
+        wincmd l
+    endif
+
+    enew
+    setlocal buftype=quickfix bufhidden=wipe nobuflisted noswapfile nowrap
+    setlocal nomodifiable
+    copen
+    wincmd p
+endfunction
+
+" Bind it
+nmap <silent> <leader>c :call Make()<CR>
 
