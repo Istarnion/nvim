@@ -1,7 +1,7 @@
 language en_GB.UTF-8
+set nocompatible
 
 if !empty(glob("~/.config/nvim/bundle"))
-  set nocompatible
   filetype off
   set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
   call neobundle#begin(expand('~/.config/nvim/bundle/'))
@@ -22,7 +22,7 @@ if !empty(glob("~/.config/nvim/bundle"))
   NeoBundle 'Xuyuanp/nerdtree-git-plugin' " Shows git-info in NERDTree
 
   call neobundle#end()
-  filetype plugin indent on
+  filetype plugin on
   NeoBundleCheck
 
   " UltiSnips config
@@ -39,7 +39,15 @@ if !empty(glob("~/.config/nvim/bundle"))
   let g:ctrlp_match_window = 'bottom,order:ttb'
   let g:ctrlp_switch_buffer = 0
   let g:ctrlp_working_path_mode = 0
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -i -g "" --ignore "\.git$\|\.svn$"'
+  let g:ctrlp_open_new_file = 'r'
+  let g:ctrlp_user_command = {
+    \ 'listing_command': 'ag %s -l --nocolor --hidden -i -g "" --ignore "\.git$|\.svn$|\.hg$"',
+    \ 'types': {
+      \ 1: ['.git', 'cd %s && git ls-files'],
+      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+      \ },
+    \ 'fallback': 'find %s -type f'
+    \ }
 
   " Settings for airline statusline
   let g:airline_powerline_fonts=1
@@ -63,8 +71,7 @@ set clipboard=unnamed,unnamedplus
 nnoremap <silent> <C-d> :nohl<CR><C-l>
 
 " indent automaticly depending on filetype
-filetype plugin indent on
-set autoindent
+set smartindent
 " show existing tab with 4 spaces width
 set tabstop=4
 " when indenting with '>', use 4 spaces width
@@ -136,7 +143,7 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
 
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+map <leader>p :cd %:p:h<cr>:pwd<cr>
 
 """"""""""""""""""""""""""""""
 " => Status line
