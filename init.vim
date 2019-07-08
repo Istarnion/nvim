@@ -8,12 +8,12 @@ if !empty(glob("~/.config/nvim/bundle"))
 
   NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'tpope/vim-surround'          " Commands to add/remove/change surrounding stuff
-  NeoBundle 'jiangmiao/auto-pairs'        " Auto insert closing )}]' and so on
   NeoBundle 'flazz/vim-colorschemes'      " Make tons of colorschemes available
   NeoBundle 'Yggdroot/indentLine'         " display thin vertical lines at indentation
   NeoBundle 'mattn/emmet-vim'             " emmet plugin for html and css
   NeoBundle 'sheerun/vim-polyglot'        " syntax files for all languages I'll ever need
   NeoBundle 'ctrlpvim/ctrlp.vim'          " Fuzzy file finding
+  NeoBundle 'mileszs/ack.vim'             " Improved searching (Actually using ag, not ack)
   NeoBundle 'SirVer/ultisnips'            " Snippet systems
   NeoBundle 'vim-airline/vim-airline'     " More fancy status line
   NeoBundle 'airblade/vim-gitgutter'      " Shows git diff in the gutter. Integrates also woth the statusline
@@ -48,6 +48,12 @@ if !empty(glob("~/.config/nvim/bundle"))
       \ },
     \ 'fallback': 'find %s -type f'
     \ }
+  " Settings for ack.vim (Make it use ag, not ack)
+  let g:ackprg = 'ag --vimgrep --smart-case'
+  cnoreabbrev ag Ack
+  cnoreabbrev aG Ack
+  cnoreabbrev Ag Ack
+  cnoreabbrev AG Ack
 
   " Settings for airline statusline
   let g:airline_powerline_fonts=1
@@ -88,14 +94,6 @@ noremap <C-s> <Esc><Esc>:w<CR>
 
 " make saving with :w case insensitive
 command! -bang -range=% -complete=file -nargs=* W <line1>,<line2>write<bang> <args>
-
-" enable line numbers
-set number
-
-" Use relative linenumbers
-set relativenumber
-" Toggle the linenumber style
-nnoremap <leader>r :set relativenumber!<cr>
 
 " set syntax highlighting
 syntax on
@@ -180,9 +178,6 @@ imap <c-e> <c-o>A;
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
-" Search for struct definition
-nmap <leader>s /struct 
-
 " Break single line statement to block statement
 nmap <leader>b ys$}a<CR><Esc>b%i<CR><Esc>0dt}%
 
@@ -244,4 +239,12 @@ endfunction
 
 " Bind it
 nmap <silent> <leader>c :call Make()<CR>
+
+" Use clang-format to format C/C++ code.
+function FormatFile()
+  let l:lines="all"
+  pyf ~/.config/nvim/clang-format.py
+endfunction
+nmap <silent> <leader>i :call FormatFile()<CR>
+vmap <silent> <leader>i :pyf ~/.config/nvim/clang-format.py<CR>
 
