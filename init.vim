@@ -17,6 +17,7 @@ if !empty(glob("~/.config/nvim/bundle"))
   NeoBundle 'SirVer/ultisnips'            " Snippet systems
   NeoBundle 'vim-airline/vim-airline'     " More fancy status line
   NeoBundle 'airblade/vim-gitgutter'      " Shows git diff in the gutter. Integrates also woth the statusline
+  NeoBundle 'tpope/vim-fugitive'          " git CLI wrapper
   NeoBundle 'tpope/vim-commentary'        " Toggle comment on line with gcc, else with gc
   NeoBundle 'scrooloose/nerdtree'         " NERDTree file browser. Yes, I do know about netrw.
   NeoBundle 'Xuyuanp/nerdtree-git-plugin' " Shows git-info in NERDTree
@@ -36,6 +37,7 @@ if !empty(glob("~/.config/nvim/bundle"))
   autocmd FileType html,css EmmetInstall
 
   " Settings for CtrlP
+  let g:ctrlp_use_caching = 0
   let g:ctrlp_match_window = 'bottom,order:ttb'
   let g:ctrlp_switch_buffer = 0
   let g:ctrlp_working_path_mode = 0
@@ -139,9 +141,6 @@ map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
-
-" Switch CWD to the directory of the open buffer
-map <leader>p :cd %:p:h<cr>:pwd<cr>
 
 """"""""""""""""""""""""""""""
 " => Status line
@@ -247,4 +246,22 @@ function FormatFile()
 endfunction
 nmap <silent> <leader>i :call FormatFile()<CR>
 vmap <silent> <leader>i :pyf ~/.config/nvim/clang-format.py<CR>
+
+function! PythonWrapper(code)
+    " Strip trailing newline
+    let code = substitute(a:code, '\n\+$', '', '')
+
+    " Import some utils
+    python 'from math import *'
+
+    try
+        let result = pyeval(code)
+        return result
+    catch /.*/
+        return code
+    endtry
+endfunction
+
+" Replace the current selection with the result of evaluating it as python
+vnoremap <silent> <leader>p c<C-R>=PythonWrapper(@")<CR><ESC>
 
