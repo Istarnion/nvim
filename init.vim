@@ -14,7 +14,7 @@ if !empty(glob("~/.config/nvim/bundle"))
   NeoBundle 'sheerun/vim-polyglot'        " syntax files for all languages I'll ever need
   NeoBundle 'ctrlpvim/ctrlp.vim'          " Fuzzy file finding
   NeoBundle 'mileszs/ack.vim'             " Improved searching (Actually using ag, not ack)
-  NeoBundle 'SirVer/ultisnips'            " Snippet systems
+  NeoBundle 'SirVer/ultisnips'            " Snippet system
   NeoBundle 'vim-airline/vim-airline'     " More fancy status line
   NeoBundle 'airblade/vim-gitgutter'      " Shows git diff in the gutter. Integrates also woth the statusline
   NeoBundle 'tpope/vim-fugitive'          " git CLI wrapper

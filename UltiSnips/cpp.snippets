@@ -2,6 +2,21 @@
 
 priority 1
 
+########
+# TODO #
+########
+snippet todo "TODO comment"
+// TODO(istarnion): $0
+endsnippet
+
+snippet note "NOTE comment"
+// NOTE(istarnion): $0
+endsnippet
+
+snippet fixme "FIXME comment"
+// FIXME(istarnion): $0
+endsnippet
+
 snippet inc "Include statement" b
 #include ${1:${VISUAL:file}}
 $0
@@ -22,7 +37,8 @@ class ${1:${VISUAL:name}}
 endsnippet
 
 snippet main "Main function" b
-int main(${1:${VISUAL:int argc, char *argv[]}})
+int
+main(${1:${VISUAL:int num_args, char *args[]}})
 {
 	$0
 	return 0;

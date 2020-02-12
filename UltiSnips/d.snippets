@@ -1,0 +1,38 @@
+priority 1
+
+########
+# TODO #
+########
+snippet todo "TODO comment"
+// TODO(istarnion): $0
+endsnippet
+
+snippet note "NOTE comment"
+// NOTE(istarnion): $0
+endsnippet
+
+snippet fixme "FIXME comment"
+// FIXME(istarnion): $0
+endsnippet
+
+snippet inc "Include statement" b
+import ${1:${VISUAL:file}}
+$0
+endsnippet
+
+snippet struct "Struct declaration" b
+struct ${1:${VISUAL:name}}
+{
+	$0
+}
+endsnippet
+
+snippet main "Main function" b
+int
+main()
+{
+	$0
+	return 0;
+}
+endsnippet
+
