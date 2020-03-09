@@ -222,18 +222,23 @@ function Make(...)
         silent make
     endif
 
-    if winnr('$') > 1
-        wincmd p
-    else
+    if winnr('$') <= 1
         vsplit
-        wincmd l
     endif
+
+    let l:oldwin = winnr()
+    let l:newwin = l:oldwin + 1
+    if l:newwin > winnr('$')
+        let l:newwin = 1
+    endif
+
+    exe l:newwin . "wincmd w"
 
     enew
     setlocal buftype=quickfix bufhidden=wipe nobuflisted noswapfile nowrap
     setlocal nomodifiable
     copen
-    wincmd p
+    exe l:oldwin . "wincmd w"
 endfunction
 
 " Bind it
