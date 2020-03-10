@@ -1,6 +1,9 @@
 language en_GB.UTF-8
 set nocompatible
 
+let mapleader = ","
+let g:mapleader = ","
+
 if !empty(glob("~/.config/nvim/bundle"))
   filetype off
   set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
@@ -37,19 +40,15 @@ if !empty(glob("~/.config/nvim/bundle"))
   autocmd FileType html,css EmmetInstall
 
   " Settings for CtrlP
-  let g:ctrlp_use_caching = 0
+  let g:ctrlp_cmd = 'CtrlPMRU'
+  let g:ctrlp_clear_cache_on_exit = 1
   let g:ctrlp_match_window = 'bottom,order:ttb'
   let g:ctrlp_switch_buffer = 0
   let g:ctrlp_working_path_mode = 0
   let g:ctrlp_open_new_file = 'r'
-  let g:ctrlp_user_command = {
-    \ 'listing_command': 'ag %s -l --nocolor --hidden -i -g "" --ignore "\.git$|\.svn$|\.hg$"',
-    \ 'types': {
-      \ 1: ['.git', 'cd %s && git ls-files'],
-      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-      \ },
-    \ 'fallback': 'find %s -type f'
-    \ }
+
+  nmap <leader>p :CtrlPClearCache<CR>
+
   " Settings for ack.vim (Make it use ag, not ack)
   let g:ackprg = 'ag --vimgrep --smart-case'
   cnoreabbrev ag Ack
@@ -87,9 +86,6 @@ set shiftwidth=4
 " On pressing tab, insert 4 spaces
 set softtabstop=4
 set expandtab
-
-let mapleader = ","
-let g:mapleader = ","
 
 " Save with C-s
 noremap <C-s> <Esc><Esc>:w<CR>
