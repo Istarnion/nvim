@@ -1,8 +1,60 @@
 priority 1
 
+########
+# TODO #
+########
+snippet todo "TODO comment"
+// TODO(istarnion): $0
+endsnippet
+
+snippet note "NOTE comment"
+// NOTE(istarnion): $0
+endsnippet
+
+snippet fixme "FIXME comment"
+// FIXME(istarnion): $0
+endsnippet
+
+snippet inc "Include statement" b
+#include ${1:${VISUAL:file}}
+$0
+endsnippet
+
 snippet struct "Struct declaration" b
 typedef struct
 {
 	$0
 } ${1:${VISUAL:name}};
 endsnippet
+
+snippet once "Include header once only guard"
+#ifndef ${1:`!p
+if not snip.c:
+	import string
+	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
+	snip.rv = ('%s_' % (name))
+else:
+	snip.rv = snip.c`}
+#define $1
+
+${VISUAL}$0
+
+#endif /* end of include guard: $1 */
+endsnippet
+
+snippet main "Main function" b
+int
+main(${1:${VISUAL:int num_args, char *args[]}})
+{
+	$0
+	return 0;
+}
+endsnippet
+
+snippet fori "For loop with i"
+for(int i=${2:${VISUAL:0}}; i<${1:${VISUAL:limit}}; ${3:${VISUAL:++i}})
+{
+	$0
+}
+endsnippet
+

@@ -1,6 +1,9 @@
 language en_GB.UTF-8
 set nocompatible
 
+let mapleader = ","
+let g:mapleader = ","
+
 if !empty(glob("~/.config/nvim/bundle"))
   filetype off
   set runtimepath^=~/.config/nvim/bundle/neobundle.vim/
@@ -8,15 +11,16 @@ if !empty(glob("~/.config/nvim/bundle"))
 
   NeoBundleFetch 'Shougo/neobundle.vim'
   NeoBundle 'tpope/vim-surround'          " Commands to add/remove/change surrounding stuff
-  NeoBundle 'jiangmiao/auto-pairs'        " Auto insert closing )}]' and so on
   NeoBundle 'flazz/vim-colorschemes'      " Make tons of colorschemes available
   NeoBundle 'Yggdroot/indentLine'         " display thin vertical lines at indentation
   NeoBundle 'mattn/emmet-vim'             " emmet plugin for html and css
   NeoBundle 'sheerun/vim-polyglot'        " syntax files for all languages I'll ever need
   NeoBundle 'ctrlpvim/ctrlp.vim'          " Fuzzy file finding
-  NeoBundle 'SirVer/ultisnips'            " Snippet systems
+  NeoBundle 'mileszs/ack.vim'             " Improved searching (Actually using ag, not ack)
+  NeoBundle 'SirVer/ultisnips'            " Snippet system
   NeoBundle 'vim-airline/vim-airline'     " More fancy status line
   NeoBundle 'airblade/vim-gitgutter'      " Shows git diff in the gutter. Integrates also woth the statusline
+  NeoBundle 'tpope/vim-fugitive'          " git CLI wrapper
   NeoBundle 'tpope/vim-commentary'        " Toggle comment on line with gcc, else with gc
   NeoBundle 'scrooloose/nerdtree'         " NERDTree file browser. Yes, I do know about netrw.
   NeoBundle 'Xuyuanp/nerdtree-git-plugin' " Shows git-info in NERDTree
@@ -36,18 +40,21 @@ if !empty(glob("~/.config/nvim/bundle"))
   autocmd FileType html,css EmmetInstall
 
   " Settings for CtrlP
+  let g:ctrlp_cmd = 'CtrlPMRU'
+  let g:ctrlp_clear_cache_on_exit = 1
   let g:ctrlp_match_window = 'bottom,order:ttb'
   let g:ctrlp_switch_buffer = 0
   let g:ctrlp_working_path_mode = 0
   let g:ctrlp_open_new_file = 'r'
-  let g:ctrlp_user_command = {
-    \ 'listing_command': 'ag %s -l --nocolor --hidden -i -g "" --ignore "\.git$|\.svn$|\.hg$"',
-    \ 'types': {
-      \ 1: ['.git', 'cd %s && git ls-files'],
-      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-      \ },
-    \ 'fallback': 'find %s -type f'
-    \ }
+
+  nmap <leader>p :CtrlPClearCache<CR>
+
+  " Settings for ack.vim (Make it use ag, not ack)
+  let g:ackprg = 'ag --vimgrep --smart-case'
+  cnoreabbrev ag Ack
+  cnoreabbrev aG Ack
+  cnoreabbrev Ag Ack
+  cnoreabbrev AG Ack
 
   " Settings for airline statusline
   let g:airline_powerline_fonts=1
@@ -80,22 +87,11 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-let mapleader = ","
-let g:mapleader = ","
-
 " Save with C-s
 noremap <C-s> <Esc><Esc>:w<CR>
 
 " make saving with :w case insensitive
 command! -bang -range=% -complete=file -nargs=* W <line1>,<line2>write<bang> <args>
-
-" enable line numbers
-set number
-
-" Use relative linenumbers
-set relativenumber
-" Toggle the linenumber style
-nnoremap <leader>r :set relativenumber!<cr>
 
 " set syntax highlighting
 syntax on
@@ -142,9 +138,6 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove<cr>
 
-" Switch CWD to the directory of the open buffer
-map <leader>p :cd %:p:h<cr>:pwd<cr>
-
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
@@ -179,9 +172,6 @@ imap <c-e> <c-o>A;
 
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
-
-" Search for struct definition
-nmap <leader>s /struct 
 
 " Break single line statement to block statement
 nmap <leader>b ys$}a<CR><Esc>b%i<CR><Esc>0dt}%
@@ -228,20 +218,51 @@ function Make(...)
         silent make
     endif
 
-    if winnr('$') > 1
-        wincmd p
-    else
+    if winnr('$') <= 1
         vsplit
-        wincmd l
     endif
+
+    let l:oldwin = winnr()
+    let l:newwin = l:oldwin + 1
+    if l:newwin > winnr('$')
+        let l:newwin = 1
+    endif
+
+    exe l:newwin . "wincmd w"
 
     enew
     setlocal buftype=quickfix bufhidden=wipe nobuflisted noswapfile nowrap
     setlocal nomodifiable
     copen
-    wincmd p
+    exe l:oldwin . "wincmd w"
 endfunction
 
 " Bind it
 nmap <silent> <leader>c :call Make()<CR>
+
+" Use clang-format to format C/C++ code.
+function FormatFile()
+  let l:lines="all"
+  pyf ~/.config/nvim/clang-format.py
+endfunction
+nmap <silent> <leader>i :call FormatFile()<CR>
+vmap <silent> <leader>i :pyf ~/.config/nvim/clang-format.py<CR>
+
+function! PythonWrapper(code)
+    " Strip trailing newline
+    let code = substitute(a:code, '\n\+$', '', '')
+
+    " Import some utils
+    python 'from math import *'
+
+    try
+        let result = pyeval(code)
+        return result
+    catch /.*/
+        return code
+    endtry
+endfunction
+
+" Replace the current selection with the result of evaluating it as python
+vnoremap <silent> <leader>p c<C-R>=PythonWrapper(@")<CR><ESC>
 
