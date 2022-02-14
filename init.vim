@@ -237,9 +237,21 @@ function Make(...)
     copen
     exe l:oldwin . "wincmd w"
 endfunction
-
-" Bind it
 nmap <silent> <leader>c :call Make()<CR>
+
+" Open corresponding .h/.cpp file
+function OpenCorrespondingFile()
+    let l:suffix = fnamemodify(bufname("%"), ":e")
+    let l:root_fn = fnamemodify(bufname("%"), ":r")
+    if l:suffix == "h"
+        exe "wincmd p"
+        exe "edit " . l:root_fn . ".cpp"
+    elseif l:suffix == "cpp" || l:suffix == "c"
+        exe "wincmd p"
+        exe "edit " . l:root_fn . ".h"
+    endif
+endfunction
+nmap <silent> <leader>s :call OpenCorrespondingFile()<CR>
 
 " Use clang-format to format C/C++ code.
 function FormatFile()
