@@ -148,8 +148,10 @@ set laststatus=2
 " colorscheme
 colorscheme blackboard
 set background=dark
-highlight Pmenu     ctermfg=15  ctermbg=0 guifg=#ffffff guibg=#000000
-highlight PmenuSel  ctermfg=226 ctermbg=0 guifg=#ffff00 guibg=#000000
+highlight Pmenu      ctermfg=15  ctermbg=0 guifg=#ffffff guibg=#000000
+highlight PmenuSel   ctermfg=226 ctermbg=0 guifg=#ffff00 guibg=#000000
+highlight Comment    ctermfg=grey guifg=#aaaaaa
+highlight CommentDoc ctermfg=grey guifg=#aaaaaa
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=234 guibg=#2D2D2D
 highlight Todo ctermfg=white ctermbg=black guifg=White guibg=Black
