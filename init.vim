@@ -4,11 +4,16 @@ set nocompatible
 let mapleader = ","
 let g:mapleader = ","
 
+" If we are neovim, we have lua, so we do plugins and such there.
+" Try to load lua/config.lua
 if has('nvim')
 lua << EOF
   require "config"
 EOF
 endif
+
+" This stuff should be as simple as possible, and preferably compatible with
+" Vim
 
 " Make the mouse work as we want to
 set mouse=a
