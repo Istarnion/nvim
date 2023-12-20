@@ -14,6 +14,9 @@ let g:mapleader = ","
 " Open new horizontal splits below
 set splitbelow
 
+" Define Help command that opens man pages in vertical splits
+command Help -nargs=* -bang -bar -addr=other vertical Man <args>
+
 " If we are neovim, we have lua, so we do plugins and such there.
 " Try to load lua/config.lua
 if has('nvim')
@@ -74,6 +77,7 @@ imap <A-l> <right>
 
 " For when we forget to open a file with sudo
 cmap w!! w !sudo tee % >/dev/null
+
 
 """"""""""""""""""""""""""""""
 " Windows / splits

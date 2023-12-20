@@ -1,4 +1,5 @@
--- Help command that opens man pages in vertical splits
+-- Override the Help command defined in init.vim to supply a better
+-- complete function
 vim.api.nvim_create_user_command('Help', 'vertical Man <args>', {
     bang = true,
     bar = true,
