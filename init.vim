@@ -119,7 +119,7 @@ nnoremap <silent> <leader>e :Explore<CR>
 set laststatus=2
 
 """"""""""""""""""""""""""""""
-" colorscheme
+" colors
 """"""""""""""""""""""""""""""
 " set syntax highlighting
 syntax on
@@ -127,16 +127,16 @@ syntax on
 " Use 24-bit colors
 set termguicolors
 
-" Customize colorscheme
-colorscheme blackboard
+" Customize colors (scheme independent, sortof. Won't look nice with a light
+" one!
 set background=dark
-highlight Pmenu      ctermfg=15  ctermbg=0 guifg=#ffffff guibg=#000000
-highlight PmenuSel   ctermfg=226 ctermbg=0 guifg=#ffff00 guibg=#000000
-highlight Comment    ctermfg=grey guifg=#aaaaaa
-highlight CommentDoc ctermfg=grey guifg=#aaaaaa
+highlight Pmenu         ctermfg=white   ctermbg=black   guifg=#ffffff   guibg=#000000
+highlight PmenuSel      ctermfg=yellow  ctermbg=black   guifg=#ffff00   guibg=#000000
+highlight Comment       ctermfg=grey                    guifg=#aaaaaa
+highlight CommentDoc    ctermfg=grey                    guifg=#aaaaaa
+highlight Todo          ctermfg=white   ctermbg=black   guifg=#ffffff   guibg=#000000
 set cursorline
-highlight CursorLine cterm=NONE ctermbg=234 guibg=#2D2D2D
-highlight Todo ctermfg=white ctermbg=black guifg=White guibg=Black
+highlight CursorLine cterm=NONE ctermbg=234 guibg=#1D1D1D
 nnoremap <leader>l :set cursorline!<CR>
 
 
