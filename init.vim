@@ -1,3 +1,6 @@
+""" This tries to be compatible with (modern) vim, not just neovim.
+""" Plugins are configured in lua/config.lua, and are neovim specific.
+
 " Set locale
 language en_GB.UTF-8
 
@@ -8,16 +11,19 @@ set nocompatible
 let mapleader = ","
 let g:mapleader = ","
 
+" Open new horizontal splits below
+set splitbelow
+
+" Open new vertical splits to the left
+set splitright
+
 " If we are neovim, we have lua, so we do plugins and such there.
 " Try to load lua/config.lua
 if has('nvim')
 lua << EOF
-  require "config"
+  require("config")
 EOF
 endif
-
-" This stuff should be as simple as possible, and preferably compatible with
-" Vim
 
 """"""""""""""""""""""""""""""
 " Misc
@@ -54,7 +60,8 @@ set ignorecase
 " ...except when we actually type upper case in the pattern
 set smartcase
 
-" Remap keys (!)
+"" Remap keys (!)
+" Move in wrapped lines
 nnoremap j gj
 nnoremap k gk
 
@@ -63,10 +70,6 @@ imap <A-k> <up>
 imap <A-h> <left>
 imap <A-j> <down>
 imap <A-l> <right>
-
-" Right hand pinky goodness on norwegian keyboards
-noremap ø o
-noremap Ø O
 
 " For when we forget to open a file with sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -79,8 +82,8 @@ nmap <CR> o<Esc>
 " Windows / splits
 """"""""""""""""""""""""""""""
 " Smart way to split windows
-nmap <silent> <A-h> :vsplit<CR>
-nmap <silent> <A-k> :split<CR>
+nmap <silent> <A-h> :vsplit<CR> :wincmd h<CR>
+nmap <silent> <A-k> :split<CR> :wincmd k<CR>
 nmap <silent> <A-l> :vsplit<CR> :wincmd l<CR>
 nmap <silent> <A-j> :split<CR> :wincmd j<CR>
 
@@ -103,7 +106,7 @@ tnoremap <C-l> <C-\><C-N><C-W>l
 " Sort plainly by name, no grouping on extensions
 let g:netrw_sort_sequence = ''
 " Open with shortcut
-nnoremap <silent> <leader>e :Explore
+nnoremap <silent> <leader>e :Explore<CR>
 
 """"""""""""""""""""""""""""""
 " Status line
@@ -182,23 +185,7 @@ function FormatFile()
 endfunction
 nmap <silent> <leader>i :call FormatFile()<CR>
 
-" Run python code (doesn't quite work yet, but the idea is
-" to be able to generate text with python inline in a file
-function! PythonWrapper(code)
-    " Strip trailing newline
-    let code = substitute(a:code, '\n\+$', '', '')
-
-    " Import some utils
-    python 'from math import *'
-
-    try
-        let result = pyeval(code)
-        return result
-    catch /.*/
-        return code
-    endtry
-endfunction
-
-" Replace the current selection with the result of evaluating it as python
-vnoremap <silent> <leader>p c<C-R>=PythonWrapper(@")<CR><ESC>
+" Use python as a glorified calculator
+command -nargs=* Calc !python3 -c "from math import *; print(<args>)"
+command -nargs=* CalcInsert read !python3 -c "from math import *; print(<args>)"
 
