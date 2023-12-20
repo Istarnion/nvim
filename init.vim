@@ -31,6 +31,10 @@ endif
 " Make the mouse work as we want to
 set mouse=a
 
+" Use relative line numbers
+set number
+set relativenumber
+
 " Set scroll offset to redduce movement
 set scrolloff=7
 
@@ -119,6 +123,9 @@ set laststatus=2
 """"""""""""""""""""""""""""""
 " set syntax highlighting
 syntax on
+
+" Use 24-bit colors
+set termguicolors
 
 " Customize colorscheme
 colorscheme blackboard
