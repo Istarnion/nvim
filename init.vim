@@ -14,9 +14,6 @@ let g:mapleader = ","
 " Open new horizontal splits below
 set splitbelow
 
-" Open new vertical splits to the left
-set splitright
-
 " If we are neovim, we have lua, so we do plugins and such there.
 " Try to load lua/config.lua
 if has('nvim')
@@ -78,10 +75,6 @@ imap <A-l> <right>
 " For when we forget to open a file with sudo
 cmap w!! w !sudo tee % >/dev/null
 
-" Make the enter key do more
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
-
 """"""""""""""""""""""""""""""
 " Windows / splits
 """"""""""""""""""""""""""""""
@@ -119,7 +112,7 @@ nnoremap <silent> <leader>e :Explore<CR>
 set laststatus=2
 
 """"""""""""""""""""""""""""""
-" colors
+" Colors
 """"""""""""""""""""""""""""""
 " set syntax highlighting
 syntax on
@@ -138,6 +131,11 @@ highlight Todo          ctermfg=white   ctermbg=black   guifg=#ffffff   guibg=#0
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=234 guibg=#1D1D1D
 nnoremap <leader>l :set cursorline!<CR>
+" show vertical lines as indent guides
+set list
+highlight Whitespace    ctermfg=grey    ctermbg=black   guifg=#2D2D2D   guibg=#000000
+set listchars=tab:¦\ ,leadmultispace:¦\ \ \ 
+nnoremap <leader>g :set list!<CR>
 
 
 """"""""""""""""""""""""""""""
