@@ -15,7 +15,7 @@ let g:mapleader = ","
 set splitbelow
 
 " Define Help command that opens man pages in vertical splits
-command Help -nargs=* -bang -bar -addr=other vertical Man <args>
+command! Help -nargs=* -bang -bar -addr=other vertical Man <args>
 
 " If we are neovim, we have lua, so we do plugins and such there.
 " Try to load lua/config.lua
@@ -106,6 +106,8 @@ tnoremap <C-l> <C-\><C-N><C-W>l
 """"""""""""""""""""""""""""""
 " Sort plainly by name, no grouping on extensions
 let g:netrw_sort_sequence = ''
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
 " Open with shortcut
 nnoremap <silent> <leader>e :Explore<CR>
 
@@ -137,7 +139,7 @@ highlight CursorLine cterm=NONE ctermbg=234 guibg=#1D1D1D
 nnoremap <leader>l :set cursorline!<CR>
 " show vertical lines as indent guides
 set list
-highlight Whitespace    ctermfg=grey    ctermbg=black   guifg=#2D2D2D   guibg=#000000
+highlight Whitespace    ctermfg=grey    ctermbg=black   guifg=#3D3D3D   guibg=#242424
 set listchars=tab:¦\ ,leadmultispace:¦\ \ \ 
 nnoremap <leader>g :set list!<CR>
 
