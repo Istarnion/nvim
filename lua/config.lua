@@ -115,9 +115,14 @@ vim.o.completeopt = 'menuone,noselect'
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.configs').setup({
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim', 'glsl' },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vimdoc', 'vim', 'glsl' },
+
+    modules = {},
+    sync_install = false,
+    ignore_install = {},
+    auto_install = false,
 
     highlight = {
         enable = true
@@ -178,7 +183,7 @@ require('nvim-treesitter.configs').setup {
             },
         },
     },
-}
+})
 
 -- Diagnostic keymaps
 -- TODO(istarnion): Find good keybindings for these! Seems useful!
