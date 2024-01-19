@@ -193,8 +193,9 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
     })
 
 -- Diagnostic keymaps
--- TODO(istarnion): Find good keybindings for these! Seems useful!
-vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>dd', vim.diagnostic.setloclist)
+vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev)
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
