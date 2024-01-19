@@ -134,6 +134,7 @@ highlight PmenuSel      ctermfg=yellow  ctermbg=black   guifg=#ffff00   guibg=#0
 highlight Comment       ctermfg=grey                    guifg=#aaaaaa
 highlight CommentDoc    ctermfg=grey                    guifg=#aaaaaa
 highlight Todo          ctermfg=white   ctermbg=black   guifg=#ffffff   guibg=#000000
+highlight Folded        ctermfg=white   ctermbg=black   guifg=#aaaaaa   guibg=#000000
 set cursorline
 highlight CursorLine cterm=NONE ctermbg=234 guibg=#1D1D1D
 nnoremap <leader>l :set cursorline!<CR>

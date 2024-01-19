@@ -185,6 +185,13 @@ require('nvim-treesitter.configs').setup({
     },
 })
 
+-- With treesitter, folding is more usable
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'FileReadPost' }, {
+        command = 'normal zR'
+    })
+
 -- Diagnostic keymaps
 -- TODO(istarnion): Find good keybindings for these! Seems useful!
 vim.keymap.set('n', '<leader>d', vim.diagnostic.setloclist)
