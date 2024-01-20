@@ -60,7 +60,7 @@ require('packer').startup(function(use)
         after = 'nvim-treesitter',
     })
 
-    use({
+    use({ -- status line
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true }
     })
@@ -68,6 +68,13 @@ require('packer').startup(function(use)
     use('flazz/vim-colorschemes')   -- Make tons of colorschemes available
     use('tpope/vim-surround')       -- Commands to add/remove/change surrounding stuff
     use('tpope/vim-fugitive')       -- git CLI wrapper
+
+    use({ -- Neorg note taking system
+        'nvim-neorg/neorg',
+        tag = '*',
+        run = ':Neorg sync-parsers',
+        requires = 'nvim-lua/plenary.nvim'
+    })
 
     if is_bootstrap then
         require('packer').sync()
@@ -349,4 +356,50 @@ require('lualine').setup({
     inactive_winbar = {},
     extensions = {}
 })
+
+-- Neorg setup
+require('neorg').setup({
+    load = {
+        ['core.defaults'] = {},
+        ['core.concealer'] = {
+            config = {
+                icons = {
+                    todo = false -- No icons on task-lists
+                }
+            }
+        },
+        ['core.dirman'] = {
+            config = {
+                workspaces = {
+                    notes = '~/notes'
+                },
+                default_workspace = 'notes'
+            }
+        },
+        ['core.journal'] = {
+            config = {
+                workspace = 'notes'
+            }
+        },
+        ['core.keybinds'] = {
+            config = {
+                default_keybinds = false,
+                hook = function(keybinds)
+                    keybinds.remap('norg', 'n', 'gtd', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_done<CR>')
+                    keybinds.remap('norg', 'n', 'gtu', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_undone<CR>')
+                    keybinds.remap('norg', 'n', 'gtp', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_pending<CR>')
+                    keybinds.remap('norg', 'n', 'gth', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_on_hold<CR>')
+                    keybinds.remap('norg', 'n', 'gtc', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_cancelled<CR>')
+                    keybinds.remap('norg', 'n', 'gtr', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_recurring<CR>')
+                    keybinds.remap('norg', 'n', 'gti', '<cmd>Neorg keybind norg core.qol.todo_items.todo.task_important<CR>')
+
+                    keybinds.remap('norg', 'n', '<cr>', '<cmd>Neorg keybind norg core.esupports.hop.hop-link<CR>')
+                end
+            }
+        }
+    }
+})
+
+vim.api.nvim_create_user_command('Note', 'Neorg keybind norg core.dirman.new.note', { bang = true })
+vim.api.nvim_create_user_command('Journal', 'Neorg journal today', { bang = true })
 
