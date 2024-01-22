@@ -108,8 +108,14 @@ tnoremap <C-l> <C-\><C-N><C-W>l
 let g:netrw_sort_sequence = ''
 let g:netrw_liststyle = 3
 let g:netrw_banner = 0
+let g:netrw_winsize = 15
 " Open with shortcut
-nnoremap <silent> <leader>e :Explore<CR>
+nnoremap <silent> <leader>e :Lexplore<CR>
+
+""""""""""""""""""""""""""""""
+" folds
+""""""""""""""""""""""""""""""
+set foldlevel=99
 
 """"""""""""""""""""""""""""""
 " Status line
