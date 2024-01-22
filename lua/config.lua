@@ -71,7 +71,7 @@ require('packer').startup(function(use)
 
     use({ -- Neorg note taking system
         'nvim-neorg/neorg',
-        tag = '*',
+        tag = 'v7.0.0',
         run = ':Neorg sync-parsers',
         requires = 'nvim-lua/plenary.nvim'
     })
